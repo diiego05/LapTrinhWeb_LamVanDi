@@ -10,8 +10,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@WebServlet(urlPatterns = {"/profile"})
-public class Profile extends HttpServlet {
+@WebServlet(urlPatterns = {"/logout"})
+public class Logout extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
     @Override
@@ -21,14 +21,11 @@ public class Profile extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
 
-        HttpSession session = request.getSession(false); // lấy session hiện tại, không tạo mới
-        if (session != null && session.getAttribute("name") != null) {
-            String name = (String) session.getAttribute("name");
-            out.print("<h2>Xin chào, " + name + "!</h2>");
-            out.print("<p>Đây là trang hồ sơ cá nhân (Profile Page).</p>");
-            out.print("<a href='logout'>Đăng xuất</a>");
-        } else {
-            response.sendRedirect("Login.html");
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate(); // xóa session
         }
+        out.print("<p>Bạn đã đăng xuất thành công</p>");
+        request.getRequestDispatcher("Login.html").include(request, response);
     }
 }
