@@ -32,7 +32,18 @@ public class LoginServletbai2 extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		doGet(request, response);
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		PrintWriter out = response.getWriter();
+		if (username.equals("trungnh")&& password.equals("123")) {
+		out.print("Chào mừng bạn, " + username);
+		HttpSession session = request.getSession();
+		session.setAttribute("name", username);
+		} else {
+		out.print("Tài khoản hoặc mật khẩu không chính xác");
+		request.getRequestDispatcher("Login.html").include(request,
+		response);
+		}
 	}
 
 }
