@@ -1,4 +1,4 @@
-package vn.iotstar.controllers;
+package vn.iotstars.Controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -28,4 +28,9 @@ public class Logout extends HttpServlet {
         out.print("<p>Bạn đã đăng xuất thành công</p>");
         request.getRequestDispatcher("Login.html").include(request, response);
     }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		doGet(request, response);
+	}
 }
