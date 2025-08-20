@@ -1,4 +1,4 @@
-package vn.iotstar.controllers;
+package vn.iotstars.Controllers;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -33,7 +33,7 @@ public class LoginServlet extends HttpServlet {
             response.sendRedirect("profile");
         } else {
             // Nếu sai tài khoản mật khẩu
-            out.print("<p style='color:red'>Tài khoản hoặc mật khẩu không chính xác</p>");
+            out.print("<p>Tài khoản hoặc mật khẩu không chính xác</p>");
             request.getRequestDispatcher("Login.html").include(request, response);
         }
     }
