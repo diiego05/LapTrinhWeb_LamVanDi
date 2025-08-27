@@ -121,7 +121,7 @@ h2 {
 </head>
 <body>
 	<div class="login-container">
-		<form action="login" method="post">
+		<form action="${pageContext.request.contextPath}/login" method="post">
 			<h2>Đăng Nhập Vào Hệ Thống</h2>
 
 			<c:if test="${alert != null}">
