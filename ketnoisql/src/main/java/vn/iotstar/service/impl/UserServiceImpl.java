@@ -8,12 +8,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public vn.iotstar.models.User login(String username, String password) {
 
-		return null;
+		User user = this.get(username);
+		if (user != null && password.equals(user.getPassWord())) {
+			return user;
+			}
+			return null;
 	}
 
 	@Override
 	public vn.iotstar.models.User get(String username) {
 
-		return null;
+		return userDao.get(username);
 	}
 }
