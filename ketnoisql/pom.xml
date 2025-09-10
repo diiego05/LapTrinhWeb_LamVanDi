@@ -24,6 +24,11 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.sitemesh</groupId>
+			<artifactId>sitemesh</artifactId>
+			<version>3.2.1</version>
+		</dependency>
 		<!--
 		https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
 		<dependency>
@@ -31,6 +36,12 @@
 			<artifactId>mssql-jdbc</artifactId>
 			<version>13.2.0.jre11</version>
 			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-fileupload2-jakarta</artifactId>
+			<version>2.0.0-M1</version>
 		</dependency>
 		<!--
 		https://mvnrepository.com/artifact/jakarta.servlet.jsp.jstl/jakarta.servlet.jsp.jstl-api -->
@@ -72,6 +83,7 @@
 					<version>3.4.0</version>
 					<configuration>
 						<webappDirectory>
+							<failOnMissingWebXml>false</failOnMissingWebXml>
 						</webappDirectory>
 					</configuration>
 				</plugin>
