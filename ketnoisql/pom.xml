@@ -82,9 +82,11 @@
 					<artifactId>maven-war-plugin</artifactId>
 					<version>3.4.0</version>
 					<configuration>
-						<webappDirectory>
-							<failOnMissingWebXml>false</failOnMissingWebXml>
-						</webappDirectory>
+						<!-- Thư mục webapp -->
+						<webappDirectory>src/main/webapp</webappDirectory>
+
+						<!-- Cho phép thiếu web.xml (Servlet 3.x trở lên) -->
+						<failOnMissingWebXml>false</failOnMissingWebXml>
 					</configuration>
 				</plugin>
 			</plugins>

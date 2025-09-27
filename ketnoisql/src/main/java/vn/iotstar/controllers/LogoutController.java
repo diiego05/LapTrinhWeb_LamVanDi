@@ -10,16 +10,11 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 @WebServlet("/logout")
 public class LogoutController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	@Override
+    private static final long serialVersionUID = 1L;
+
+    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // Xóa session
-        HttpSession session = req.getSession(false);
-        if (session != null) {
-            session.invalidate();
-        }
-        
-        // Chuyển về trang login
+        req.getSession().invalidate(); // hủy session
         resp.sendRedirect(req.getContextPath() + "/login");
     }
 }

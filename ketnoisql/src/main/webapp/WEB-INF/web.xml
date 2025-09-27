@@ -3,6 +3,8 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	version="4.0">
+
+	<!-- SiteMesh Filter -->
 	<filter>
 		<filter-name>sitemesh</filter-name>
 		<filter-class>org.sitemesh.config.ConfigurableSiteMeshFilter</filter-class>
@@ -11,4 +13,16 @@
 		<filter-name>sitemesh</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
+
+	<!-- Chạy login.jsp hoặc servlet /login làm trang mặc định -->
+	<welcome-file-list>
+		<!-- Nếu muốn JSP trực tiếp -->
+		<!-- <welcome-file>view/login.jsp</welcome-file> -->
+
+		<!-- Nếu muốn chạy qua LoginController (đã map urlPatterns="/login") -->
+		<welcome-file>login</welcome-file>
+	</welcome-file-list>
+
+
+
 </web-app>

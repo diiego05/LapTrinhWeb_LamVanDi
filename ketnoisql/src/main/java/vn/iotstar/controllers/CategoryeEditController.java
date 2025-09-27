@@ -33,8 +33,8 @@ public class CategoryeEditController extends HttpServlet {
 		String id = req.getParameter("id");
 		Category category = cateService.get(Integer.parseInt(id));
 		req.setAttribute("category", category);
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/views/admin/editcategory.jsp");
-		dispatcher.forward(req, resp);
+		req.getRequestDispatcher("/view/edit-Category.jsp").forward(req, resp);
+
 	}
 
 	@Override

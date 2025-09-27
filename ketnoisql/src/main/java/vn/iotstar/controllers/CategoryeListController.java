@@ -9,20 +9,23 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import vn.iotstar.dao.CategoryDAO;
+import vn.iotstar.dao.impl.CategoryDAOImpl;
 import vn.iotstar.models.Category;
 import vn.iotstar.service.CategoryService;
 import vn.iotstar.service.impl.CategoryServiceImpl;
 
-@WebServlet(urlPatterns = { "/admin/category/list" })
+@WebServlet(urlPatterns = {"/admin/category/list"})
 public class CategoryeListController extends HttpServlet {
-	CategoryService cateService = new CategoryServiceImpl();
+	private static final long serialVersionUID = 1L;
 
-	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		List<Category> cateList = cateService.getAll();
-		req.setAttribute("cateList", cateList);
-		RequestDispatcher dispatcher = req.getRequestDispatcher("/views/admin/listcategory.jsp");
-		dispatcher.forward(req, resp);
-	}
+    CategoryDAO cateDao = new CategoryDAOImpl();
 
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        List<Category> cateList = cateDao.getAll(); // <-- kiểm tra chỗ này có trả dữ liệu ko
+        req.setAttribute("cateList", cateList);
+        req.getRequestDispatcher("/view/list-category.jsp").forward(req, resp);
+    }
 }

@@ -10,108 +10,85 @@ import vn.iotstar.dao.UserDao;
 import vn.iotstar.models.User;
 
 public class UserDaoImpl implements UserDao {
-	public Connection conn = null;
-	public PreparedStatement ps = null;
-	public ResultSet rs = null;
 
-	@Override
-	public User get(String username) {
-		String sql = "SELECT * FROM [User] WHERE username = ? ";
-		try {
-			conn = new dbconnection().getConnectionW();
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, username);
-			rs = ps.executeQuery();
-			while (rs.next()) {
-				User user = new User();
-				user.setId(rs.getInt("id"));
-				user.setEmail(rs.getString("email"));
-				user.setUserName(rs.getString("username"));
-				user.setFullName(rs.getString("fullname"));
-				user.setPassWord(rs.getString("password"));
-				user.setAvatar(rs.getString("avatar"));
+	dbconnection dbConn = new dbconnection();
+    @Override
+    public User get(String username) {
+        String sql = "SELECT * FROM [User] WHERE username=?";
+        try (Connection conn = dbConn.getConnectionW();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User u = new User();
+                u.setUserName(rs.getString("username"));
+                u.setPassWord(rs.getString("password"));
+                u.setFullName(rs.getString("fullname"));
+                u.setEmail(rs.getString("email"));
+                u.setPhone(rs.getString("phone"));
+                return u;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
-				return user;
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    @Override
+    public void insert(User user) {
+        String sql = "INSERT INTO [User](username, password, email, fullname, phone) VALUES (?, ?, ?, ?, ?)";
+        try (Connection conn = dbConn.getConnectionW();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, user.getUserName());
+            ps.setString(2, user.getPassWord());
+            ps.setString(3, user.getEmail());
+            ps.setString(4, user.getFullName());
+            ps.setString(5, user.getPhone());
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	@Override
-	public void insert(User user) {
-		String sql = "INSERT INTO [User](email, username, fullname, password, avatar, phone ) VALUES (?,?,?,?,?,?)";
-		try {
-			conn = new dbconnection().getConnectionW();
-			ps = conn.prepareStatement(sql);
-			ps.setString(1, user.getEmail());
-			ps.setString(2, user.getUserName());
-			ps.setString(3, user.getFullName());
-			ps.setString(4, user.getPassWord());
-			ps.setString(5, user.getAvatar());
-			ps.setString(7, user.getPhone());
-			ps.executeUpdate();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    @Override
+    public boolean checkExistEmail(String email) {
+        String sql = "SELECT 1 FROM [User] WHERE email=?";
+        try (Connection conn =dbConn.getConnectionW();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
-	@Override
-	public boolean checkExistEmail(String email) {
-		boolean duplicate = false;
-		String query = "select * from [user] where email = ?";
-		try {
-			conn = new dbconnection().getConnectionW();
-			ps = conn.prepareStatement(query);
-			ps.setString(1, email);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				duplicate = true;
-			}
-			ps.close();
-			conn.close();
-		} catch (Exception ex) {
-		}
-		return duplicate;
-	}
+    @Override
+    public boolean checkExistUsername(String username) {
+        String sql = "SELECT 1 FROM [User] WHERE username=?";
+        try (Connection conn = dbConn.getConnectionW();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
-	@Override
-	public boolean checkExistUsername(String username) {
-		boolean duplicate = false;
-		String query = "select * from [User] where username = ?";
-		try {
-			conn = new dbconnection().getConnectionW();
-			ps = conn.prepareStatement(query);
-			ps.setString(1, username);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				duplicate = true;
-			}
-			ps.close();
-			conn.close();
-		} catch (Exception ex) {
-		}
-		return duplicate;
-	}
-
-	@Override
-	public boolean checkExistPhone(String phone) {
-		boolean duplicate = false;
-		String query = "select * from [User] where phone = ?";
-		try {
-			conn = new dbconnection().getConnectionW();
-			ps = conn.prepareStatement(query);
-			ps.setString(1, phone);
-			rs = ps.executeQuery();
-			if (rs.next()) {
-				duplicate = true;
-			}
-			ps.close();
-			conn.close();
-		} catch (Exception ex) {
-		}
-		return duplicate;
-	}
-
+    @Override
+    public boolean checkExistPhone(String phone) {
+        String sql = "SELECT 1 FROM [User] WHERE phone=?";
+        try (Connection conn = dbConn.getConnectionW();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, phone);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
